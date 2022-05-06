@@ -6,7 +6,12 @@ root += 'book_review'
 
 
 def index(request):
-    return render(request, 'index.html')
+    r = requests.get(f'{root}/all/')
+    # print(r.text)
+    # print(r.json())
+    result = r.json()
+    books = result['data']
+    return render(request, 'index.html', {'books': books})
 
 
 def detail(request, pk):
