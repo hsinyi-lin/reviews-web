@@ -15,7 +15,14 @@ def index(request):
 
 
 def detail(request, pk):
-    return render(request, 'detail.html')
+    r = requests.get(f'{root}/get/{pk}/')
+    result = r.json()
+    if result['success'] is True:
+        book = result['data']
+        return render(request, 'detail.html', {'book': book})
+    else:
+        message = result['message']
+        return render(request, 'result.html', {'message': message})
 
 
 def search(request):
